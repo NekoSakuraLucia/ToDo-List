@@ -1,57 +1,34 @@
-import { useState } from "react"
-import "./TodoList.css"
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [taskInput, setTaskInput] = useState("");
-
-  const handleAddTask = () => {
-    if (taskInput.trim()) {
-      setTasks([...tasks, { id: Date.now(), text: taskInput, completed: false }]);
-      setTaskInput("");
-    }
-  };
-
-  const handleToggleTask = (taskId) => {
-    setTasks(tasks.map(task =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    ));
-  };
-
-  const handleDeleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
-  };
+  const [count, setCount] = useState(0)
 
   return (
-    <div className="container">
-      <div className="todo-container">
-        <h1>To-Do - List</h1>
-        <input
-          type="text"
-          value={taskInput}
-          onChange={(e) => setTaskInput(e.target.value)}
-          className="task-input"
-          placeholder="Add a new task..."
-        />
-        <button type="button" className="add-btn" onClick={handleAddTask}>Add</button>
+    <>
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
       </div>
-
-      <ul className="task-list">
-        {tasks.map(task => (
-          <li key={task.id} className={`task-item ${task.completed ? "completed" : ""}`}>
-            <span
-              onClick={() => handleToggleTask(task.id)}
-              className="task-text"
-            >
-              {task.text}
-            </span>
-            <button onClick={() => handleDeleteTask(task.id)} className="delete-btn">
-              &#10005;
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
   )
 }
 
