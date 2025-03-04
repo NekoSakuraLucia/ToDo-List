@@ -1,5 +1,12 @@
+import Todos from './components/Todos';
+import Layout from './Layout';
+
 function App() {
-    return <div className="text-2xl font-bold">App.jsx</div>;
+    return (
+        <Layout>
+            <Todos />
+        </Layout>
+    );
 }
 
 export default App;
