@@ -12,7 +12,7 @@ const TodosAdd = ({ handleSubmit, ToDoInput, setToDoInput }) => {
                     }
                     value={ToDoInput.title}
                     placeholder="Title"
-                    className="bg-purple-400/20 hover:outline hover:outline-1 hover:outline-purple-400 transition-all duration-[250ms] rounded py-2 px-3 w-full max-w-[365px]"
+                    className="bg-purple-400/20 hover:outline hover:outline-purple-400 transition-all duration-[250ms] rounded py-2 px-3 w-full max-w-[365px]"
                 />
             </div>
             <div className="mt-8">
