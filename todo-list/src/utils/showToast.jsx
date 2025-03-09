@@ -1,6 +1,6 @@
 import { addToast } from '@heroui/react';
 
-const showToast = (description, color, title = 'เกิดข้อผิดพลาด') => {
+const showToast = (title, description, color) => {
     addToast({
         title,
         description,
