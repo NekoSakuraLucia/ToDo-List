@@ -13,7 +13,8 @@ const ToDoModal = ({
     onOpenChange,
     handleEdit,
     ToDoEdit,
-    setToDoEdit,
+    dispatch,
+    ACTION,
 }) => {
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -31,9 +32,12 @@ const ToDoModal = ({
                                 label="หัวข้อ"
                                 placeholder="กรอกหัวข้อของ To-Do"
                                 onChange={(e) =>
-                                    setToDoEdit({
-                                        ...ToDoEdit,
-                                        title: e.target.value,
+                                    dispatch({
+                                        type: ACTION.SET_TODO_EDIT,
+                                        payload: {
+                                            ...ToDoEdit,
+                                            title: e.target.value,
+                                        },
                                     })
                                 }
                                 value={ToDoEdit.title}

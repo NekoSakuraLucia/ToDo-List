@@ -1,38 +1,83 @@
-import { FaTrash } from 'react-icons/fa';
-import TodosModal from './TodosModal';
-import { useDisclosure } from '@heroui/react';
-import { useState } from 'react';
+import { useReducer } from 'react';
 import axios from 'axios';
+import { FaTrash } from 'react-icons/fa';
+import { useDisclosure } from '@heroui/react';
+
+import TodosModal from './TodosModal';
+import { showToast } from '../utils/showToast';
+
+import {
+    failed404,
+    failedResponse,
+    editSuccess,
+    warnEdit,
+} from '../utils/todos';
+
+const ACTION = Object.freeze({
+    SET_TODO_EDIT: 'set-todo-edit',
+    REST_TODO_EDIT: 'reset-todo-edit',
+});
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case ACTION.SET_TODO_EDIT:
+            return {
+                ...state,
+                _id: action.payload._id,
+                title: action.payload.title,
+            };
+        case ACTION.REST_TODO_EDIT:
+            return {
+                ...state,
+                _id: '',
+                title: '',
+            };
+        default:
+            return state;
+    }
+};
+
+const initialToDoEditState = {
+    _id: '',
+    title: '',
+};
 
 const TodosList = ({ ToDoList }) => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [ToDoEdit, setToDoEdit] = useState({ _id: '', title: '' });
+    const [ToDoEdit, dispatch] = useReducer(reducer, initialToDoEditState);
+    // const [ToDoEdit, setToDoEdit] = useState({ _id: '', title: '' });
 
     const handleEdit = async () => {
         try {
-            if (!ToDoEdit.title) return alert('กรุณากรอกข้อมูลหัวข้อก่อน');
-            if (!ToDoEdit._id) return alert('ไม่พบข้อมูลที่ตรงกับการแก้ไข');
+            if (!ToDoEdit.title || !ToDoEdit._id) return warnEdit();
 
             try {
                 const response = await axios.put(`/api/todos/${ToDoEdit._id}`, {
                     title: ToDoEdit.title,
                 });
 
-                if (!response.data) return alert('ไม่สามารถแก้ไขข้อมูลได้');
-                if (response.status === 404)
-                    return alert('ไม่พบข้อมูลนี้ในฐานข้อมูล');
+                if (!response.data) return failedResponse();
 
-                setToDoEdit({ _id: '', title: '' });
+                if (response.status === 404) return failed404();
+
+                // setToDoEdit({ _id: '', title: '' });
+                dispatch({ type: ACTION.REST_TODO_EDIT });
+                editSuccess();
             } catch (error) {
-                console.error(error);
+                showToast(
+                    'เกิดข้อผิดพลาด',
+                    error.response.data.message,
+                    'danger'
+                );
             }
         } catch (error) {
-            console.error(error);
+            showToast('เกิดข้อผิดพลาด', error.message, 'danger');
         }
     };
 
     const handleOpenModal = (todo) => {
-        setToDoEdit({ _id: todo._id, title: todo.title });
+        // setToDoEdit({ _id: todo._id, title: todo.title })
+        dispatch({ type: ACTION.SET_TODO_EDIT, payload: todo });
         onOpen();
     };
 
@@ -59,8 +104,9 @@ const TodosList = ({ ToDoList }) => {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 ToDoEdit={ToDoEdit}
-                setToDoEdit={setToDoEdit}
                 handleEdit={handleEdit}
+                dispatch={dispatch}
+                ACTION={ACTION}
             />
         </>
     );
