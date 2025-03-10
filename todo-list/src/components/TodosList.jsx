@@ -11,7 +11,7 @@ import {
     failedResponse,
     editSuccess,
     warnEdit,
-} from '../utils/todos';
+} from '../utils/todos/todosList';
 
 const ACTION = Object.freeze({
     SET_TODO_EDIT: 'set-todo-edit',
