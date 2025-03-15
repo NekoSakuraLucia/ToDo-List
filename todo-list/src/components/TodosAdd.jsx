@@ -2,6 +2,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 const TodosAdd = ({ handleSubmit, ToDoInput, setToDoInput }) => {
+    const handleClick = () => {
+        if (ToDoInput.title.trim()) {
+            handleSubmit();
+        }
+    };
+
     return (
         <div className="max-w-[1200px] mx-auto">
             <h1 className="text-2xl tracking-wide font-bold">
@@ -21,7 +27,7 @@ const TodosAdd = ({ handleSubmit, ToDoInput, setToDoInput }) => {
             <div className="mt-8">
                 <Button
                     className="w-full max-w-[130px] py-5"
-                    onClick={handleSubmit}
+                    onClick={handleClick}
                 >
                     Submit
                 </Button>
