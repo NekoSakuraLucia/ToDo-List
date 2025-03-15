@@ -3,15 +3,15 @@ import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
 import { useDisclosure } from '@heroui/react';
 
-import TodosModal from './TodosModal';
-import { showToast } from '../utils/showToast';
+import TodosModal from '@/components/TodosModal';
+import { showToast } from '@/utils/showToast';
 
 import {
     failed404,
     failedResponse,
     editSuccess,
     warnEdit,
-} from '../utils/todos/todosList';
+} from '@/utils/todos/todosList';
 
 const ACTION = Object.freeze({
     SET_TODO_EDIT: 'set-todo-edit',

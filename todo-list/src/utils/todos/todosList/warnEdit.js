@@ -1,4 +1,4 @@
-import { showToast } from '../showToast';
+import { showToast } from '@/utils/showToast';
 
 const warnEdit = () => {
     showToast(

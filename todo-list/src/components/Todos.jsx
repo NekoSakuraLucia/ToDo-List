@@ -1,9 +1,9 @@
 import axios, { isAxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 
-import SearchInput from './SearchInput';
-import TodosAdd from './TodosAdd';
-import TodosList from './TodosList';
+import SearchInput from '@/components/SearchInput';
+import TodosAdd from '@/components/TodosAdd';
+import TodosList from '@/components/TodosList';
 
 import { addToast } from '@heroui/react';
 

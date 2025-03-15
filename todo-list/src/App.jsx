@@ -1,5 +1,5 @@
-import Todos from './components/Todos';
-import Layout from './Layout';
+import Todos from '@/components/Todos';
+import Layout from '@/Layout';
 
 function App() {
     return (

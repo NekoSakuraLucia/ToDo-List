@@ -1,4 +1,4 @@
-import { showToast } from '../showToast';
+import { showToast } from '@/utils/showToast';
 
 const failed404 = () => {
     showToast('เกิดข้อผิดพลาด', 'ไม่พบข้อมูลนี้ในฐานข้อมูล', 'danger');
