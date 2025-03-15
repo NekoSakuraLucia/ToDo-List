@@ -81,24 +81,31 @@ const TodosList = ({ ToDoList }) => {
         onOpen();
     };
 
+    if (!ToDoList || ToDoList.length === 0) {
+        return <div>No todos</div>;
+    }
+
     return (
         <>
-            {ToDoList.map((todo, index) => (
-                <div
-                    onClick={() => handleOpenModal(todo)}
-                    key={index}
-                    className="relative bg-secondary/30 py-4 text-left px-4 max-w-[550px] mx-auto font-semibold rounded-md cursor-pointer"
-                >
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <span>{todo.title}</span>
+            <ul>
+                {ToDoList.map((ToDo) => (
+                    <li key={ToDo._id} role="listitem">
+                        <div
+                            onClick={() => handleOpenModal(ToDo)}
+                            className="relative bg-secondary/30 py-4 text-left px-4 max-w-[550px] mx-auto font-semibold rounded-md cursor-pointer"
+                        >
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <span>{ToDo.title}</span>
+                                </div>
+                                <button className="text-red-500 hover:text-red-700">
+                                    <FaTrash />
+                                </button>
+                            </div>
                         </div>
-                        <button className="text-red-500 hover:text-red-700">
-                            <FaTrash />
-                        </button>
-                    </div>
-                </div>
-            ))}
+                    </li>
+                ))}
+            </ul>
 
             <TodosModal
                 isOpen={isOpen}

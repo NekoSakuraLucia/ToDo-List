@@ -61,7 +61,7 @@ const Todos = () => {
         setFilteredTodos(
             ToDoData.filter((todo) => {
                 return todo.title
-                    .toLowerCase()
+                    ?.toLowerCase()
                     .includes(ToDoSearch.toLowerCase());
             })
         );
