@@ -32,4 +32,22 @@ describe('Todos', () => {
             expect(screen.getByText('Test 3')).toBeInTheDocument();
         });
     });
+
+    it('ตรวจสอบในกรณี Title หาย', async () => {
+        const mockData = [
+            {
+                _id: '1',
+            },
+        ];
+
+        axios.get.mockResolvedValue({ data: mockData });
+
+        render(<Todos />);
+        await waitFor(() => {
+            const listItem = screen.queryAllByRole('listitem');
+            expect(listItem).toHaveLength(0);
+            expect(screen.queryByText('undefined')).not.toBeInTheDocument();
+            expect(screen.getByText('No todos')).toBeInTheDocument();
+        });
+    });
 });

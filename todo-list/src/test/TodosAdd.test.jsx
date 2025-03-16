@@ -55,4 +55,12 @@ describe('TodosAdd', () => {
         expect(handleSubmit).not.toHaveBeenCalled();
         expect(setToDoInput).not.toHaveBeenCalled();
     });
+
+    it('ตรวจสอบ input text เกิน', () => {
+        const inputElement = screen.getByPlaceholderText('Title');
+        fireEvent.change(inputElement, { target: { value: 'a'.repeat(51) } });
+        expect(setToDoInput).toHaveBeenCalledWith({
+            title: 'a'.repeat(51),
+        });
+    });
 });
