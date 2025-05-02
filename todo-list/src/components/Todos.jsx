@@ -56,11 +56,9 @@ const Todos = () => {
     }, []);
 
     const filteredToDos = useMemo(() => {
-        return ToDoData.filter((todo) => {
-            return todo.title
-                ?.toLowerCase()
-                .includes(ToDoSearch.trim().toLowerCase());
-        });
+        return ToDoData.filter((todo) =>
+            todo.title?.toLowerCase().includes(ToDoSearch.trim().toLowerCase())
+        );
     }, [ToDoData, ToDoSearch]);
 
     const handleSubmit = async () => {

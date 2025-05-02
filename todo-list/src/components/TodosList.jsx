@@ -48,30 +48,41 @@ const TodosList = ({ ToDoList }) => {
     // const [ToDoEdit, setToDoEdit] = useState({ _id: '', title: '' });
 
     const handleEdit = async () => {
+        if (!ToDoEdit.title || !ToDoEdit._id) return warnEdit();
+
         try {
-            if (!ToDoEdit.title || !ToDoEdit._id) return warnEdit();
+            const response = await axios.put(`/api/todos/${ToDoEdit._id}`, {
+                title: ToDoEdit.title,
+            });
 
-            try {
-                const response = await axios.put(`/api/todos/${ToDoEdit._id}`, {
-                    title: ToDoEdit.title,
-                });
-
-                if (!response.data) return failedResponse();
-
-                if (response.status === 404) return failed404();
-
-                // setToDoEdit({ _id: '', title: '' });
-                dispatch({ type: ACTION.REST_TODO_EDIT });
-                editSuccess();
-            } catch (error) {
-                showToast(
-                    'เกิดข้อผิดพลาด',
-                    error.response.data.message,
-                    'danger'
-                );
-            }
+            if (!response.data) return failedResponse();
+            // setToDoEdit({ _id: '', title: '' });
+            dispatch({ type: ACTION.REST_TODO_EDIT });
+            editSuccess();
         } catch (error) {
-            showToast('เกิดข้อผิดพลาด', error.message, 'danger');
+            if (axios.isAxiosError(error) && error.response) {
+                const status = error.response.status;
+
+                switch (status) {
+                    case 400:
+                        return showToast(
+                            'เกิดข้อผิดพลาด',
+                            error.response.data.message,
+                            'danger'
+                        );
+
+                    case 404:
+                        return failed404();
+                    default:
+                        return showToast(
+                            'เกิดข้อผิดพลาด',
+                            `Server Error ${status}`,
+                            'danger'
+                        );
+                }
+            } else {
+                return showToast('เกิดข้อผิดพลาด', error.message, 'danger');
+            }
         }
     };
 
