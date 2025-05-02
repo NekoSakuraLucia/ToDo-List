@@ -87,18 +87,18 @@ const TodosList = ({ ToDoList }) => {
 
     return (
         <>
-            <ul>
+            <ul className='space-y-4'>
                 {ToDoList.map((ToDo) => (
-                    <li key={ToDo._id} role="listitem">
+                    <li key={ToDo._id} role='listitem'>
                         <div
                             onClick={() => handleOpenModal(ToDo)}
-                            className="relative bg-secondary/30 py-4 text-left px-4 max-w-[550px] mx-auto font-semibold rounded-md cursor-pointer"
+                            className='relative bg-secondary/30 py-4 text-left px-4 max-w-[550px] mx-auto font-semibold rounded-md cursor-pointer'
                         >
-                            <div className="flex justify-between items-center">
+                            <div className='flex justify-between items-center'>
                                 <div>
                                     <span>{ToDo.title}</span>
                                 </div>
-                                <button className="text-red-500 hover:text-red-700">
+                                <button className='text-red-500 hover:text-red-700'>
                                     <FaTrash />
                                 </button>
                             </div>
